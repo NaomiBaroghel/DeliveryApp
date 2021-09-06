@@ -1,0 +1,106 @@
+﻿<UserControl x:Class="WPFHalonotTrue.View.ClientUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:m="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF" 
+
+
+             xmlns:local="clr-namespace:WPFHalonotTrue.View"
+             mc:Ignorable="d"  d:DesignWidth="800" Height="459">
+    <Grid Margin="0,0,10,0">
+        <Grid.Background>
+            <ImageBrush ImageSource="/Images/fondbleu3.jpg"></ImageBrush>
+        </Grid.Background>
+
+        <Rectangle Height="314" Fill="WhiteSmoke" VerticalAlignment="Bottom" Margin="48,0,443,135"  >
+            <Rectangle.Effect>
+                <DropShadowEffect Color="#FFBBBBBB" BlurRadius="15" Direction="0" RenderingBias="Quality" ShadowDepth="1"/>
+            </Rectangle.Effect>
+           
+        </Rectangle>
+
+        <TextBlock Text="   Client" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="68,23,590,0" Foreground="Gray" FontSize="10" FontWeight="Bold" Height="22" Width="132"/>
+
+        <!--MUST STAY FIRST-->
+        <Button x:Name="create" Content="Create" FontSize="16" Height="32"  Width="143" HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding MyReplaceUCCommand}" CommandParameter="{Binding Content, ElementName=create}" Margin="121,350,0,0"    Background="White" IsEnabled="False" BorderThickness="3"/>
+
+
+        <!--  <TextBlock Text="Enter your first name :" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="108,0,0,386" Height="28" Width="216" FontWeight="Bold" />-->
+        <materialDesign:PackIcon Kind="Account" VerticalAlignment="Center" Margin="68,51,0,378" Height="30" Width="31" Background="WhiteSmoke" />
+
+        <TextBox x:Name="firstname"  materialDesign:HintAssist.Hint=" First Name"   Margin="104,51,480,378"  FontStyle="Italic" Foreground="Gray" TextChanged="firstname_TextChanged" Background="WhiteSmoke"  FontSize="13" >
+            <TextBox.Text >
+                <Binding Path="FN" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay" >
+
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+
+        <!-- <TextBlock Text="Enter your last name : " VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="108,0,0,307" Height="26" Width="216" FontWeight="Bold" />-->
+        <materialDesign:PackIcon Kind="Account" VerticalAlignment="Center" Margin="68,102,0,327" Height="30" Width="31" Background="WhiteSmoke" />
+
+        <TextBox x:Name="lastname"  materialDesign:HintAssist.Hint=" Last Name" TextChanged="lastname_TextChanged"  Margin="104,102,480,327" FontStyle="Italic" Foreground="Gray"  Background="WhiteSmoke" FontSize="13" >
+            <TextBox.Text>
+                <Binding Path="LN" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay"/>
+            </TextBox.Text>
+        </TextBox>
+
+
+
+
+
+
+        <!--<TextBlock Text="Enter your Address Mail :" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="440,0,0,393" FontWeight="Bold" />-->
+        <materialDesign:PackIcon Kind="EmailOpen" Margin="68,154,0,0" Height="36" Width="31" Background="WhiteSmoke"/>
+
+        <TextBox x:Name="mail" materialDesign:HintAssist.Hint=" Email" TextChanged="mail_TextChanged" Margin="104,154,480,275" FontStyle="Italic" Foreground="Gray" Background="WhiteSmoke" FontSize="13" >
+            <TextBox.Text>
+                <Binding Path="DMMail" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay"/>
+            </TextBox.Text>
+        </TextBox>
+
+        <!--<TextBlock Text="Enter your Phone Number :" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="440,0,0,301" Height="24" Width="144" FontWeight="Bold" />-->
+        <materialDesign:PackIcon Kind="TelephoneIncoming" Margin="68,209,0,0" Width="28" Height="28" Background="WhiteSmoke"/>
+
+        <TextBox x:Name="phonenumber"  materialDesign:HintAssist.Hint=" Phone"   PreviewTextInput="TextAllow2"  Margin="108,209,480,222"  FontStyle="Italic" Foreground="Gray" Background="WhiteSmoke" FontSize="13" >
+            <TextBox.Text>
+                <Binding Path="DMPhone" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay"/>
+            </TextBox.Text>
+        </TextBox>
+
+        <materialDesign:PackIcon Kind="Food" Margin="68,264,0,0" Width="31" Height="43" Background="WhiteSmoke"/>
+
+        <CheckBox x:Name="food"  Content="Food" IsChecked="{Binding food,Mode=TwoWay}"  Margin="104,263,588,152" IsEnabled="True" Checked="CheckBox_Food" Unchecked="UnCheckBox_Food"  FontWeight="Bold"  FontSize="15"/>
+        <materialDesign:PackIcon Kind="MedicalBag" Margin="188,263,0,0" Width="28" Height="43" Background="WhiteSmoke"/>
+
+        <CheckBox x:Name="drug"  Content="Medicine" IsChecked="{Binding drug,Mode=TwoWay}" Margin="221,263,460,152" IsEnabled="True" Checked="CheckBox_Drug" Unchecked="UnCheckBox_Drug" FontWeight="Bold" FontSize="15"  />
+
+
+
+
+
+        <Grid Margin="352,23,10,135">
+            <Button x:Name="ok" Content="Ok" Command="{Binding MyReplaceUCCommand}" CommandParameter="{Binding Content, ElementName=ok}" FontSize="16" Width="88" HorizontalAlignment="Right"  Margin="0,60,102,54" Background="White" IsDefault="True" Grid.Column="1"   />
+
+            <m:Map x:Name="map" Culture="en-US" CredentialsProvider="TOdRmkW390gp17Kf6CJj~rckEG0baSMjfAKI50l7p8w~AmkUsdyKtsB_YUA1W-B9a3Hue5QSsBP6C0x3DADZ0PWV5Z-Hi4dvjgeXVOFab01y" Mode="AerialWithLabels"  Center="31.208344,34.595350" ZoomLevel="8" Margin="0,-12,0,0"  />
+
+            <materialDesign:PackIcon Kind="AddressMarker" Margin="24,0,0,0" Width="28" Height="39" Background="WhiteSmoke" />
+            <TextBox x:Name="searchaddress"  materialDesign:HintAssist.Hint=" Number Adress City"   Margin="57,0,183,262"  FontStyle="Italic" Foreground="Gray"  Background="WhiteSmoke" TextChanged="searchaddress_TextChanged"  FontSize="13" >
+                <TextBox.Text >
+                    <Binding Path="Address" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay" >
+
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+        </Grid>
+
+        <Button x:Name="reset" Content="Reset"  FontSize="16" Command="{Binding MyReplaceUCCommand}" CommandParameter="{Binding Content, ElementName=reset}" Background="White" Height="Auto" Margin="473,350,210,77" />
+
+        <Button x:Name="cancel" Content="Cancel" FontSize="16" Width="109" HorizontalAlignment="Right" Command="{Binding MyReplaceUCCommand}" CommandParameter="{Binding Content, ElementName=cancel}" Margin="0,350,63,77" Background="White"  />
+
+
+
+    </Grid>
+</UserControl>

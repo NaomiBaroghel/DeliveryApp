@@ -1,7 +1,13 @@
-﻿using System;
-using DAL;
+﻿using DAL;
 using BE;
-using System.Runtime.InteropServices;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Data.Entity;
+using System.Net.Http;
+using System.Windows;
 
 namespace BL
 {
@@ -20,13 +26,28 @@ namespace BL
                 CheckMail(myclient.Mail);
                 CheckName(myclient.FirstName, myclient.LastName);
                 CheckPhoneNumber(myclient.Phone);
-                Configuration.ClientID += 1;
-                myclient.IDClient = Configuration.ClientID;
                 dalimp.AddClient(myclient);
             }
             catch (Exception e)
             {
                 throw new Exception(e.Message);
+            }
+        }
+
+
+
+
+
+        //get the address of the client
+        public Address getAddressFromClient(Client myclient)
+        {
+            try
+            {
+                return dalimp.getAddressFromClient(myclient);
+            }
+            catch (Exception e)
+            {
+                throw e;
             }
         }
 
@@ -37,7 +58,7 @@ namespace BL
             {
                 dalimp.RemoveClient(myclient);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 throw new Exception(e.Message);
             }
@@ -97,17 +118,16 @@ namespace BL
             if (myclient.FirstName != null)
                 if (myclient.LastName != null)
                     if (myclient.Mail != null)
-                        if (myclient.MyAddress != null)
+                        if (myclient.MyAddress != null)// && myclient.MyAddress.NbAppart.ToString().Length != 0 && myclient.MyAddress.ACity.ToString().Length != 0 && myclient.MyAddress.StreeName != null)
                             if (myclient.Phone != null)
-                               
-                                    if (myclient.Food == true && myclient.Drug == false || myclient.Food == false && myclient.Drug == true || myclient.Drug == true && myclient.Food == true)
-                                        return;
-                                    else
-                                        throw new ArgumentException("You must choose Food or/and Drug");
-                                 else
+                                if (myclient.Food == true && myclient.Drug == false || myclient.Food == false && myclient.Drug == true || myclient.Drug == true && myclient.Food == true)
+                                    return;
+                                else
+                                    throw new ArgumentException("You must choose Food or/and Drug");
+                            else
                                 throw new ArgumentException("You must enter your phone number");
                         else
-                            throw new ArgumentException("You must enter your address");
+                            throw new ArgumentException("You must enter a valid address");
                     else
                         throw new ArgumentException("You must enter your mail address");
                 else
@@ -118,20 +138,84 @@ namespace BL
 
 
         }
+
+        public void UpdateFoodDrug(Client myclient, bool food, bool drug)
+        {
+            try
+            {
+                dalimp.UpdateFoodDrug(myclient, food, drug);
+
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        //update the client's address
+        public void UpdateAddress(Client myclient, Address newaddress)
+        {
+            try
+            {
+                dalimp.UpdateAddress(myclient, newaddress);
+
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        //get the client dispo
+        public List<Client> GetDispoClient()
+        {
+            try
+            {
+                return dalimp.GetDispoClient();
+
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+        }
         #endregion
 
 
         #region distribution
-        //add a distribution to the list
-        public void AddDistribution(Distribution mydis)
+        //add a distribution to the list and give AssignF or Assign D = true
+        public void AddDistribution(Distribution mydis, List<Address> myaddress)
         {
             try
             {
-                CheckAddD(mydis);
-                Configuration.DistributionID += 1;
-                mydis.IDDis = Configuration.DistributionID;
+                mydis.AllAddress = new List<Address>();
+
+                CheckAddD(mydis, myaddress);
+
+                dalimp.AddDistribution(mydis, myaddress);
+                ClientAssign(myaddress, mydis.Food, mydis.Drug);
+
+
             }
-            catch(Exception e)
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        //remove distribution ~ we don't really use it
+        public void RemoveDistribution(Distribution mydis)
+        {
+            try
+            {
+
+                dalimp.RemoveDistribution(mydis);
+            }
+            catch (Exception e)
             {
                 throw new Exception(e.Message);
             }
@@ -144,7 +228,7 @@ namespace BL
             {
                 dalimp.UpdateCancelDis(mydis);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 throw new Exception(e.Message);
             }
@@ -152,7 +236,7 @@ namespace BL
 
         }
 
-        //update distribution
+        ////if fix = true, we need to create a new distribution with the new date
         public void UpdateDis(Distribution mydis)
         {
             try
@@ -170,11 +254,10 @@ namespace BL
         {
             if (mydis.Fix == true)
             {
-                //update de Distribution (surtout lorsque fix = true, on rajoute autant de jour qu'il faut pour la prochaine distribution, done = false)
-                mydis.TimeDistribution.Add(mydis.TimeDistribution[mydis.TimeDistribution.Count - 1].AddDays(mydis.Interval));
+                mydis.DisTime = mydis.DisTime.AddDays(mydis.Interval);
                 try
                 {
-                    UpdateDis(mydis);
+                    UpdateDis(mydis); //if fix = true, we need to create a new distribution with the new date
                 }
                 catch (Exception e)
                 {
@@ -185,8 +268,8 @@ namespace BL
             {
                 try
                 {
-                   
-                    dalimp.UpdateDoneDis(mydis);
+
+                    dalimp.UpdateDoneDis(mydis);//otherwise we just need to make done = true
                 }
                 catch (Exception e)
                 {
@@ -197,22 +280,49 @@ namespace BL
 
 
         //check if the properties are not null
-        public void CheckAddD(Distribution mydis)
+        public void CheckAddD(Distribution mydis, List<Address> address)
         {
-
-            if (mydis.AllAddress != null)
-                if (mydis.Food == true || mydis.Drug == true)
-                    if (mydis.Fix == true && mydis.Interval != 0)
-                        return;
-                    else
-                        throw new ArgumentException("You must indicate delivery interval");
-                else
-                    throw new ArgumentException("Must be for Food or Drug");
-            else
-                throw new ArgumentException("You must enter at least one address");
            
 
+                if (address.Count > 0)
+                    if (mydis.Food == true || mydis.Drug == true)
+                        if (mydis.Fix == true && mydis.Interval > 0 || mydis.Fix == false)
+                            return;
+                        else
+                            throw new ArgumentException("You must indicate a delivery interval");
+                    else
+                        throw new ArgumentException("Must be for Food or/and Drug");
+                else
+                    throw new ArgumentException("You must enter at least one address");
+            
 
+
+        }
+
+        //return the distribution not done or not cancel
+        public List<Distribution> DisNotDone(DeliveryMan dman)
+        {
+            try
+            {
+                return dalimp.DisNotDone(dman);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        //return the addresses of the distribution
+        public List<Address> getAddressFromDis(Distribution dis)
+        {
+            try
+            {
+                return dalimp.getAddressFromDis(dis);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
         #endregion
 
@@ -229,8 +339,6 @@ namespace BL
                 CheckMail(mydman.Mail);
                 CheckName(mydman.FirstName, mydman.LastName);
                 CheckPhoneNumber(mydman.Phone);
-                Configuration.DeliveryManID += 1;
-                mydman.IDDMan = Configuration.DeliveryManID;
                 dalimp.AddDMan(mydman);
             }
             catch (Exception e)
@@ -300,24 +408,26 @@ namespace BL
             }
         }
 
+
+
         //check the properties are not null
         public void CheckAddDM(DeliveryMan mydman)
         {
-           
-                if (mydman.FirstName != null)
-                    if (mydman.LastName != null)
-                        if (mydman.Mail != null)
-                            if (mydman.Phone != null)
-                                return;
-                            else
-                                throw new ArgumentException("You must enter a phone number");
+
+            if (mydman.FirstName != null)
+                if (mydman.LastName != null)
+                    if (mydman.Mail != null)
+                        if (mydman.Phone != null)
+                            return;
                         else
-                            throw new ArgumentException("You must enter a mail address");
+                            throw new ArgumentException("You must enter a phone number");
                     else
-                        throw new ArgumentException("You must enter a last name");
+                        throw new ArgumentException("You must enter a mail address");
                 else
-                    throw new ArgumentException("You must enter a first name");
-           
+                    throw new ArgumentException("You must enter a last name");
+            else
+                throw new ArgumentException("You must enter a first name");
+
 
 
         }
@@ -326,7 +436,53 @@ namespace BL
 
         #endregion
 
+        #region address
+        //add address in the list
+        public void AddAddress(Address myaddress)
+        {
 
+            try
+            {
+                dalimp.AddAddress(myaddress);
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+
+        }
+
+        //remove an address from the list
+        public void RemoveAddress(Address myaddress)
+        {
+
+            try
+            {
+                dalimp.RemoveAddress(myaddress);
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        #endregion
+
+        #region config
+
+        //add a config and create database if doesn't exist
+        public void AddConfig(Configuration config)
+        {
+            try
+            {
+                dalimp.AddConfig(config);
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
+        }
+        #endregion
 
         #region check
         //check the form of the phone number
@@ -356,7 +512,52 @@ namespace BL
 
         #endregion
 
-
+        #region getlist
+        public List<Client> GetClientList()
+        {
+            try
+            {
+                return dalimp.GetClientList();
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+        public List<Distribution> GetDisList()
+        {
+            try
+            {
+                return dalimp.GetDisList();
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+        public List<DeliveryMan> GetDManList()
+        {
+            try
+            {
+                return dalimp.GetDManList();
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+        public List<Address> GetAddressList()
+        {
+            try
+            {
+                return dalimp.GetAddressList();
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+        #endregion
         //assigne a new distribution to the delivery man
         public void Assignation(Distribution mydis, DeliveryMan mydman)
         {
@@ -370,10 +571,540 @@ namespace BL
             }
         }
 
+        //give AssignsF or AssignsD true
+
+        public void ClientAssign(List<Address> myaddress, bool food, bool drug)
+        {
+            try
+            {
+                dalimp.ClientAssign(myaddress, food, drug);
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+
+        //add address to distribution
+        public void AddAddressToDis(Distribution mydis, Address myaddress)
+        {
+            try
+            {
+                dalimp.AddAddressToDis(mydis, myaddress);
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+
+
+        //return address dispo specific distribution
+        public List<Address> AddressDispo(Boolean food, Boolean drug)
+        {
+            try
+            {
+                return dalimp.AddressDispo(food, drug);
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
+        }
 
 
 
 
+        #region location
+        //return location of an address
+        public async Task<object> SearchLocation(String myaddress, object jsonObject)
+        {
+            try
+            { 
+            return await dalimp.SearchLocation(myaddress, jsonObject);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        #endregion
+        #region chart
+        #region day
+
+       //return distribution planned of a certain day and a certain city
+        public List<Distribution> DisPlanned(DateTime myday, String mycity)
+        {
+            try
+            { 
+            Boolean flag = false;
+            List<Distribution> mylistdis = dalimp.GetDisList();
+            List<Distribution> displanned = new List<Distribution>();
+
+            foreach (Distribution dis in mylistdis)
+            {
+                flag = false;
+                if (dis.DisTime == myday)
+                {
+                    List<Address> mylistaddress = dalimp.getAddressFromDis(dis);
+                    foreach (Address address in mylistaddress)
+                    {
+                        if (address.ACity.ToString() == mycity)
+                            flag = true;
+                    }
+                }
+                if (flag)
+                    displanned.Add(dis);
+
+            }
+
+            return displanned;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        //return distribution done of a certain day and a certain city
+        public List<Distribution> DisDone(DateTime myday, String mycity)
+        {
+            try
+            {
+                bool flag = false;
+                List<Distribution> mylistdis = dalimp.GetDisList();
+                List<Distribution> disdone = new List<Distribution>();
+
+                foreach (Distribution dis in mylistdis)
+                {
+
+
+                    flag = false;
+                    if (dis.DisTime.ToShortDateString() == myday.ToShortDateString() && dis.DoneTime.ToShortDateString() == myday.ToShortDateString() && dis.Done == true)
+                    {
+
+                        List<Address> mylistaddress = dalimp.getAddressFromDis(dis);
+                        foreach (Address address in mylistaddress)
+                        {
+                            if (address.ACity.ToString() == mycity)
+                                flag = true;
+                        }
+                    }
+                    if (flag)
+                        disdone.Add(dis);
+
+
+                }
+
+
+                return disdone;
+            
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
+}
+
+        //return distribution done of a certain city on the day choosen but not planned
+        public List<Distribution> DisNotPlannedButDone(DateTime myday, String mycity)
+        {
+            try
+            { 
+            Boolean flag = false;
+            List<Distribution> mylistdis = dalimp.GetDisList();
+            List<Distribution> disNotPlannedButDone = new List<Distribution>();
+
+            foreach (Distribution dis in mylistdis)
+            {
+                flag = false;
+                if (dis.DisTime < myday && dis.DoneTime.ToShortDateString() == myday.ToShortDateString() && dis.Done == true)
+                {
+
+                    List<Address> mylistaddress = dalimp.getAddressFromDis(dis);
+                    foreach (Address address in mylistaddress)
+                    {
+                        if (address.ACity.ToString() == mycity)
+                            flag = true;
+                    }
+                }
+                if (flag)
+                    disNotPlannedButDone.Add(dis);
+            }
+
+            return disNotPlannedButDone;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        //return distribution canceled of a certain day and a certain city
+        public List<Distribution> DisCanceled(DateTime myday, string mycity)
+        {
+            try
+            { 
+            Boolean flag = false;
+            List<Distribution> mylistdis = dalimp.GetDisList();
+            List<Distribution> disCanceled = new List<Distribution>();
+
+            foreach (Distribution dis in mylistdis)
+            {
+                flag = false;
+                List<Address> mylistaddress = dalimp.getAddressFromDis(dis);
+                foreach (Address address in mylistaddress)
+                {
+                    if (address.ACity.ToString() == mycity)
+                        flag = true;
+                }
+
+                if (dis.DisTime <= myday && dis.DoneTime.ToShortDateString() == myday.ToShortDateString() && dis.Cancel == true && flag)
+                    disCanceled.Add(dis);
+            }
+
+            return disCanceled;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        #endregion
+
+        #region week
+
+        //return distribution planned of a certain week and a certain city
+        public List<Distribution> DisPlannedWeek(DateTime myday, String mycity)
+        {
+            try
+            { 
+            Boolean flag = false;
+            List<Distribution> mylistdis = dalimp.GetDisList();
+            List<Distribution> displanned = new List<Distribution>();
+            DateTime dayweek = myday.AddDays(7);
+
+            foreach (Distribution dis in mylistdis)
+            {
+                flag = false;
+                if (dis.DisTime >= myday || dis.DisTime <= dayweek)
+                {
+                    List<Address> mylistaddress = dalimp.getAddressFromDis(dis);
+                    foreach (Address address in mylistaddress)
+                    {
+                        if (address.ACity.ToString() == mycity)
+                            flag = true;
+                    }
+                }
+                if (flag)
+                    displanned.Add(dis);
+
+            }
+
+            return displanned;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        //return distribution done of a certain week and a certain city
+
+        public List<Distribution> DisDoneWeek(DateTime myday, String mycity)
+        {
+            try
+            { 
+            bool flag = false;
+            List<Distribution> mylistdis = dalimp.GetDisList();
+            List<Distribution> disdone = new List<Distribution>();
+            DateTime dayweek = myday.AddDays(7);
+
+
+            foreach (Distribution dis in mylistdis)
+            {
+
+                flag = false;
+                if ((dis.DisTime >= myday || dis.DisTime <= dayweek) && (dis.DoneTime.ToShortDateString() == myday.ToShortDateString() || dis.DoneTime >= myday || dis.DoneTime <= dayweek || dis.DoneTime.ToShortDateString() == dayweek.ToShortDateString()) && dis.Done == true)
+                {
+
+                    List<Address> mylistaddress = dalimp.getAddressFromDis(dis);
+                    foreach (Address address in mylistaddress)
+                    {
+                        if (address.ACity.ToString() == mycity)
+                            flag = true;
+                    }
+                }
+                if (flag)
+                    disdone.Add(dis);
+
+
+            }
+
+
+            return disdone;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        //return distribution done of a certain city on the week choosen but not planned
+        public List<Distribution> DisNotPlannedButDoneWeek(DateTime myday, String mycity)
+        {
+            try
+            { 
+            Boolean flag = false;
+            List<Distribution> mylistdis = dalimp.GetDisList();
+            List<Distribution> disNotPlannedButDone = new List<Distribution>();
+            DateTime dayweek = myday.AddDays(7);
+
+
+            foreach (Distribution dis in mylistdis)
+            {
+                flag = false;
+                if (dis.DisTime < myday && (dis.DoneTime.ToShortDateString() == myday.ToShortDateString() || dis.DoneTime >= myday || dis.DoneTime <= dayweek || dis.DoneTime.ToShortDateString() == dayweek.ToShortDateString()) && dis.Done == true)
+                {
+
+                    List<Address> mylistaddress = dalimp.getAddressFromDis(dis);
+                    foreach (Address address in mylistaddress)
+                    {
+                        if (address.ACity.ToString() == mycity)
+                            flag = true;
+                    }
+                }
+                if (flag)
+                    disNotPlannedButDone.Add(dis);
+            }
+
+            return disNotPlannedButDone;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        //return distribution canceled of a certain week and a certain city
+        public List<Distribution> DisCanceledWeek(DateTime myday, string mycity)
+        {
+            try
+            { 
+            Boolean flag = false;
+            List<Distribution> mylistdis = dalimp.GetDisList();
+            List<Distribution> disCanceled = new List<Distribution>();
+            DateTime dayweek = myday.AddDays(7);
+
+
+            foreach (Distribution dis in mylistdis)
+            {
+                flag = false;
+                List<Address> mylistaddress = dalimp.getAddressFromDis(dis);
+                foreach (Address address in mylistaddress)
+                {
+                    if (address.ACity.ToString() == mycity)
+                        flag = true;
+                }
+
+                if (dis.DisTime <= myday && (dis.DoneTime.ToShortDateString() == myday.ToShortDateString() || dis.DoneTime >= myday || dis.DoneTime <= dayweek || dis.DoneTime.ToShortDateString() == dayweek.ToShortDateString()) && dis.Cancel == true && flag)
+                    disCanceled.Add(dis);
+            }
+
+            return disCanceled;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        #endregion
+
+
+        #region month
+
+        //return distribution planned of a certain month and a certain city
+        public List<Distribution> DisPlannedMonth(DateTime myday, String mycity)
+        {
+            try
+            { 
+            Boolean flag = false;
+            List<Distribution> mylistdis = dalimp.GetDisList();
+            List<Distribution> displanned = new List<Distribution>();
+
+            foreach (Distribution dis in mylistdis)
+            {
+                flag = false;
+                if (dis.DisTime.Month == myday.Month)
+                {
+                    List<Address> mylistaddress = dalimp.getAddressFromDis(dis);
+                    foreach (Address address in mylistaddress)
+                    {
+                        if (address.ACity.ToString() == mycity)
+                            flag = true;
+                    }
+                   
+
+                }
+                if (flag)
+                    displanned.Add(dis);
+
+
+
+            }
+
+            return displanned;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        //return distribution done of a certain month and a certain city
+
+        public List<Distribution> DisDoneMonth(DateTime myday, String mycity)
+        {
+            try
+            { 
+            bool flag = false;
+            List<Distribution> mylistdis = dalimp.GetDisList();
+            List<Distribution> disdone = new List<Distribution>();
+
+            foreach (Distribution dis in mylistdis)
+            {
+
+
+                flag = false;
+                if (dis.DisTime.Month == myday.Month && dis.DoneTime.Month == myday.Month && dis.Done == true)
+                {
+
+                    List<Address> mylistaddress = dalimp.getAddressFromDis(dis);
+                    foreach (Address address in mylistaddress)
+                    {
+                        if (address.ACity.ToString() == mycity)
+                            flag = true;
+                    }
+                }
+                if (flag)
+                    disdone.Add(dis);
+
+
+            }
+
+
+            return disdone;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        //return distribution done of a certain city in the month choosen but not planned 
+        public List<Distribution> DisNotPlannedButDoneMonth(DateTime myday, String mycity)
+        {
+            try
+            { 
+            Boolean flag = false;
+            List<Distribution> mylistdis = dalimp.GetDisList();
+            List<Distribution> disNotPlannedButDone = new List<Distribution>();
+
+            foreach (Distribution dis in mylistdis)
+            {
+                flag = false;
+                if (dis.DisTime.Month != myday.Month && dis.DoneTime.Month == myday.Month && dis.Done == true)
+                {
+
+                    List<Address> mylistaddress = dalimp.getAddressFromDis(dis);
+                    foreach (Address address in mylistaddress)
+                    {
+                        if (address.ACity.ToString() == mycity)
+                            flag = true;
+                    }
+                }
+                if (flag)
+                    disNotPlannedButDone.Add(dis);
+            }
+
+            return disNotPlannedButDone;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        //return distribution canceled of a certain month and a certain city
+        public List<Distribution> DisCanceledMonth(DateTime myday, string mycity)
+        {
+            try
+            { 
+            Boolean flag = false;
+            List<Distribution> mylistdis = dalimp.GetDisList();
+            List<Distribution> disCanceled = new List<Distribution>();
+
+            foreach (Distribution dis in mylistdis)
+            {
+                flag = false;
+                List<Address> mylistaddress = dalimp.getAddressFromDis(dis);
+                foreach (Address address in mylistaddress)
+                {
+                    if (address.ACity.ToString() == mycity)
+                        flag = true;
+                }
+
+                if (dis.DoneTime.Month == myday.Month && dis.Cancel == true && flag)
+                    disCanceled.Add(dis);
+            }
+
+            return disCanceled;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        #endregion
+
+        #endregion
+
+        #region kmeans
+        //create the clusters
+        public async Task<Address[][]> KMeans(bool food, bool drug)
+        {
+            try
+            {
+                return await dalimp.Kmeans(food, drug);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+        }
+        #endregion
+
+
+
+        #region PDF
+        //get pdf of the deliveryman selected
+        public void printPDF(int index)
+        {
+            try
+            {
+                dalimp.PrintPDF(index);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        #endregion
     }
-
 }

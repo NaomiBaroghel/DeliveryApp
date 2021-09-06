@@ -4,6 +4,60 @@
     "C:\\Users\\Baroghel\\source\\repos\\ProjetHalonot\\ProjetHalonot\\ProjetHalonot.csproj": {}
   },
   "projects": {
+    "C:\\Users\\Baroghel\\source\\repos\\ProjetHalonot\\BE\\BE.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Baroghel\\source\\repos\\ProjetHalonot\\BE\\BE.csproj",
+        "projectName": "BE",
+        "projectPath": "C:\\Users\\Baroghel\\source\\repos\\ProjetHalonot\\BE\\BE.csproj"
+      },
+      "frameworks": {
+        "net45": {}
+      }
+    },
+    "C:\\Users\\Baroghel\\source\\repos\\ProjetHalonot\\BL\\BL.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Baroghel\\source\\repos\\ProjetHalonot\\BL\\BL.csproj",
+        "projectName": "BL",
+        "projectPath": "C:\\Users\\Baroghel\\source\\repos\\ProjetHalonot\\BL\\BL.csproj",
+        "frameworks": {
+          "net45": {
+            "projectReferences": {
+              "C:\\Users\\Baroghel\\source\\repos\\ProjetHalonot\\BE\\BE.csproj": {
+                "projectPath": "C:\\Users\\Baroghel\\source\\repos\\ProjetHalonot\\BE\\BE.csproj"
+              },
+              "C:\\Users\\Baroghel\\source\\repos\\ProjetHalonot\\DAL\\DAL.csproj": {
+                "projectPath": "C:\\Users\\Baroghel\\source\\repos\\ProjetHalonot\\DAL\\DAL.csproj"
+              }
+            }
+          }
+        }
+      },
+      "frameworks": {
+        "net45": {}
+      }
+    },
+    "C:\\Users\\Baroghel\\source\\repos\\ProjetHalonot\\DAL\\DAL.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Baroghel\\source\\repos\\ProjetHalonot\\DAL\\DAL.csproj",
+        "projectName": "DAL",
+        "projectPath": "C:\\Users\\Baroghel\\source\\repos\\ProjetHalonot\\DAL\\DAL.csproj",
+        "frameworks": {
+          "net45": {
+            "projectReferences": {
+              "C:\\Users\\Baroghel\\source\\repos\\ProjetHalonot\\BE\\BE.csproj": {
+                "projectPath": "C:\\Users\\Baroghel\\source\\repos\\ProjetHalonot\\BE\\BE.csproj"
+              }
+            }
+          }
+        }
+      },
+      "frameworks": {
+        "net45": {}
+      }
+    },
     "C:\\Users\\Baroghel\\source\\repos\\ProjetHalonot\\ProjetHalonot\\ProjetHalonot.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -26,7 +80,14 @@
         },
         "frameworks": {
           "netcoreapp3.1": {
-            "projectReferences": {}
+            "projectReferences": {
+              "C:\\Users\\Baroghel\\source\\repos\\ProjetHalonot\\BE\\BE.csproj": {
+                "projectPath": "C:\\Users\\Baroghel\\source\\repos\\ProjetHalonot\\BE\\BE.csproj"
+              },
+              "C:\\Users\\Baroghel\\source\\repos\\ProjetHalonot\\BL\\BL.csproj": {
+                "projectPath": "C:\\Users\\Baroghel\\source\\repos\\ProjetHalonot\\BL\\BL.csproj"
+              }
+            }
           }
         },
         "warningProperties": {

@@ -1,19 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{22085875-2C4D-44F7-B2E8-3212D3221787}</ProjectGuid>
+    <ProjectGuid>{F0447F2A-2031-49AE-8427-7FCEFEC2D04B}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>WPFHalonotTrue</RootNamespace>
     <AssemblyName>WPFHalonotTrue</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -34,9 +36,66 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Images\package2.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis, Version=1.47.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.1.47.0\lib\net45\Google.Apis.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Auth, Version=1.47.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Auth.1.47.0\lib\net45\Google.Apis.Auth.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Auth.PlatformServices, Version=1.47.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Auth.1.47.0\lib\net45\Google.Apis.Auth.PlatformServices.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.Core, Version=1.47.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Core.1.47.0\lib\net45\Google.Apis.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.PlatformServices, Version=1.47.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.1.47.0\lib\net45\Google.Apis.PlatformServices.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Apis.YouTube.v3, Version=1.47.0.2008, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.YouTube.v3.1.47.0.2008\lib\net45\Google.Apis.YouTube.v3.dll</HintPath>
+    </Reference>
+    <Reference Include="KMeansPackage, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\K-Means.1.0.0\lib\KMeansPackage.dll</HintPath>
+    </Reference>
+    <Reference Include="MaterialDesignColors, Version=1.2.6.1513, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignColors.1.2.6\lib\net45\MaterialDesignColors.dll</HintPath>
+    </Reference>
+    <Reference Include="MaterialDesignThemes.Wpf, Version=3.1.3.1513, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignThemes.3.1.3\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Maps.MapControl.WPF">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Bing Maps WPF Control\V1\Libraries\Microsoft.Maps.MapControl.WPF.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PdfSharp, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp.1.50.5147\lib\net20\PdfSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="PdfSharp.Charting, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp.1.50.5147\lib\net20\PdfSharp.Charting.dll</HintPath>
+    </Reference>
+    <Reference Include="Sparrow.Chart.Wpf.40, Version=13.1.0.118, Culture=neutral, PublicKeyToken=50f33fb8697e9a92, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sparrow.Chart.Wpf.13.1.0.118\lib\net40\Sparrow.Chart.Wpf.40.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Controls.DataVisualization.Toolkit, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Windows.Controls.DataVisualization.Toolkit.4.0.0.0\lib\net40-Client\System.Windows.Controls.DataVisualization.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -49,12 +108,108 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WpfAnimatedGif, Version=2.0.0.0, Culture=neutral, PublicKeyToken=9e7cd3b544a090dc, processorArchitecture=MSIL">
+      <HintPath>..\packages\WpfAnimatedGif.2.0.0\lib\net40\WpfAnimatedGif.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Command\ReplaceUCCommand.cs" />
+    <Compile Include="Model\ChartModel.cs" />
+    <Compile Include="Model\ChooseClientModel.cs" />
+    <Compile Include="Model\ChooseDisModel.cs" />
+    <Compile Include="Model\ChooseModel.cs" />
+    <Compile Include="Model\ClientModel.cs" />
+    <Compile Include="Model\DistributionModel.cs" />
+    <Compile Include="Model\KMeansModel.cs" />
+    <Compile Include="Model\DoneModel.cs" />
+    <Compile Include="Model\EmployeeModel.cs" />
+    <Compile Include="Model\LoginModel.cs" />
+    <Compile Include="Model\PDFModel.cs" />
+    <Compile Include="Model\UpdateClientModel.cs" />
+    <Compile Include="Model\UpdateEmployeeModel.cs" />
+    <Compile Include="ViewModel\ChooseClientVM.cs" />
+    <Compile Include="ViewModel\ChooseDisVM.cs" />
+    <Compile Include="ViewModel\ChooseDManVM.cs" />
+    <Compile Include="ViewModel\ClientVM.cs" />
+    <Compile Include="ViewModel\DistributionVM.cs" />
+    <Compile Include="ViewModel\DoneVM.cs" />
+    <Compile Include="ViewModel\EmployeeViewModel.cs" />
+    <Compile Include="ViewModel\LoginVM.cs" />
+    <Compile Include="ViewModel\MainWindowVM.cs" />
+    <Compile Include="ViewModel\MenuAssignVM.cs" />
+    <Compile Include="ViewModel\MenuClientVM.cs" />
+    <Compile Include="ViewModel\MenuDistributionVM.cs" />
+    <Compile Include="ViewModel\MenuEmployeeVM.cs" />
+    <Compile Include="ViewModel\ChartVM.cs" />
+    <Compile Include="ViewModel\KMeansVM.cs" />
+    <Compile Include="ViewModel\MenuVM.cs" />
+    <Compile Include="ViewModel\PDFVM.cs" />
+    <Compile Include="ViewModel\UpdateClientVM.cs" />
+    <Compile Include="ViewModel\UpdateEmployeeVM.cs" />
+    <Compile Include="View\BarUserControl.xaml.cs">
+      <DependentUpon>BarUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ChartUserControl.xaml.cs">
+      <DependentUpon>ChartUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ChooseClientUserControl.xaml.cs">
+      <DependentUpon>ChooseClientUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ChooseDisUserControl.xaml.cs">
+      <DependentUpon>ChooseDisUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ChooseDManUserControl.xaml.cs">
+      <DependentUpon>ChooseDManUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ClientUserControl.xaml.cs">
+      <DependentUpon>ClientUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DistributionUserControl.xaml.cs">
+      <DependentUpon>DistributionUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\DoneUserControl.xaml.cs">
+      <DependentUpon>DoneUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\EmployeeUserControl.xaml.cs">
+      <DependentUpon>EmployeeUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\KMeansUserControl.xaml.cs">
+      <DependentUpon>KMeansUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\LoginUserControl.xaml.cs">
+      <DependentUpon>LoginUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuAssignUserControl.xaml.cs">
+      <DependentUpon>MenuAssignUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuClientUserControl.xaml.cs">
+      <DependentUpon>MenuClientUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuDistributionUserControl.xaml.cs">
+      <DependentUpon>MenuDistributionUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuEmployeeUserControl.xaml.cs">
+      <DependentUpon>MenuEmployeeUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MenuUserControl.xaml.cs">
+      <DependentUpon>MenuUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PDFUserControl.xaml.cs">
+      <DependentUpon>PDFUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PieUserControl.xaml.cs">
+      <DependentUpon>PieUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UpdateClientUserControl.xaml.cs">
+      <DependentUpon>UpdateClientUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UpdateEmployeeUserControl.xaml.cs">
+      <DependentUpon>UpdateEmployeeUserControl.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -67,6 +222,86 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\BarUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ChartUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\ChooseClientUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\ChooseDisUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\ChooseDManUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\ClientUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\DistributionUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\DoneUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\EmployeeUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\KMeansUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\LoginUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\MenuAssignUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\MenuClientUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\MenuDistributionUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\MenuEmployeeUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\MenuUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PDFUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\PieUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UpdateClientUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\UpdateEmployeeUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -86,13 +321,96 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="Scripts\jquery-2.1.1.min.map" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\backgroundlivreur.jpg" />
+    <Resource Include="Images\deliverybackground.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BE\BE.csproj">
+      <Project>{572a7a10-0e1e-4b73-8ce2-76dce8ce7f86}</Project>
+      <Name>BE</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BL\BL.csproj">
+      <Project>{6e7bf730-f09d-4204-ae96-847297168590}</Project>
+      <Name>BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DAL\DAL.csproj">
+      <Project>{5bd6d5f7-7b43-4408-a476-78c0810dba7e}</Project>
+      <Name>DAL</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icongif.ico" />
+    <Resource Include="Images\icongif.gif" />
+    <Resource Include="Images\icongif.ico" />
+    <Resource Include="Images\backgroundlivraison.jpg" />
+    <Resource Include="Images\backgroundliv.jpg" />
+    <Resource Include="Images\backgroundcolle.jpg" />
+    <Resource Include="Images\eyescheck.jpg" />
+    <Resource Include="Images\eyesuncheck.jpg" />
+    <Resource Include="Images\background3.jpg" />
+    <Resource Include="Images\camiondeliverybackground.jpg" />
+    <Resource Include="Images\camionmapbackground.jpg" />
+    <Resource Include="Images\mapbackground.jpg" />
+    <Resource Include="Images\mapcamionbackground.jpg" />
+    <Resource Include="Images\mapmotobackground.jpg" />
+    <Resource Include="Images\mapcity.jpg" />
+    <Resource Include="Images\maplivraison.jpg" />
+    <Resource Include="Images\package.ico" />
+    <Resource Include="Images\package.jpg" />
+    <Resource Include="Images\welcomegif.gif" />
+    <Resource Include="Images\package2.ico" />
+    <Resource Include="Images\camiondelivery.gif" />
+    <Resource Include="Images\maplivraison2.jpg" />
+    <Resource Include="Images\mappointer.jpg" />
+    <Resource Include="Images\fondbleu.jpg" />
+    <Resource Include="Images\fondbleu2.jpg" />
+    <Resource Include="Images\fondbleu3.jpg" />
+    <Resource Include="Images\boxgif.gif" />
+    <Resource Include="Images\livreur3.png" />
+    <Resource Include="Images\client.jpg" />
+    <Resource Include="Images\clientvoile.jpg" />
+    <Resource Include="Images\livreur3voile.png" />
+    <Resource Include="Images\mappointer2.jpg" />
+    <Resource Include="Images\mappointer2voile.jpg" />
+    <Resource Include="Images\livreuricone.jpg" />
+    <Resource Include="Images\livreuriconevoile.jpg" />
+    <Resource Include="Images\mapwithpointer.jpg" />
+    <Resource Include="Images\mapwithpointervoile.jpg" />
+    <Resource Include="Images\musicoff.png" />
+    <Resource Include="Images\musicon.png" />
+    <Resource Include="Images\camionmoving.gif" />
+    <Resource Include="Images\sleepingguy.gif" />
+    <Resource Include="Images\needhelpguy.gif" />
+    <Resource Include="Images\fondblancvoile.png" />
+    <Resource Include="Images\closebouton.png" />
+    <Content Include="Scripts\jquery-2.1.1.intellisense.js" />
+    <Content Include="Scripts\jquery-2.1.1.js" />
+    <Content Include="Scripts\jquery-2.1.1.min.js" />
+    <Content Include="Scripts\nugetexample.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Music\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>Ce projet fait référence à des packages NuGet qui sont manquants sur cet ordinateur. Utilisez l'option de restauration des packages NuGet pour les télécharger. Pour plus d'informations, consultez http://go.microsoft.com/fwlink/?LinkID=322105. Le fichier manquant est : {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+    <Error Condition="!Exists('..\packages\MaterialDesignThemes.3.1.3\build\MaterialDesignThemes.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\MaterialDesignThemes.3.1.3\build\MaterialDesignThemes.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
+  <Import Project="..\packages\MaterialDesignThemes.3.1.3\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.3.1.3\build\MaterialDesignThemes.targets')" />
 </Project>

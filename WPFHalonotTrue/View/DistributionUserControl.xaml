@@ -1,0 +1,84 @@
+﻿<UserControl x:Class="WPFHalonotTrue.View.DistributionUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:local="clr-namespace:WPFHalonotTrue.View"
+             mc:Ignorable="d" Height="459" Width="805">
+    <Grid Margin="0,0,10,0">
+        <Grid.Background>
+            <ImageBrush ImageSource="/Images/fondbleu3.jpg"></ImageBrush>
+        </Grid.Background>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="332*"/>
+            <ColumnDefinition Width="463*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="133*"/>
+            <RowDefinition Height="20*"/>
+        </Grid.RowDefinitions>
+
+        <Rectangle Height="338" Fill="WhiteSmoke" VerticalAlignment="Bottom" Margin="31,0,34,28" Grid.ColumnSpan="2">
+            <Rectangle.Effect>
+                <DropShadowEffect Color="#FFBBBBBB" BlurRadius="15" Direction="0" RenderingBias="Quality" ShadowDepth="1"/>
+            </Rectangle.Effect>
+        </Rectangle>
+        <TextBlock Text="   Distribution" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="45,39,209,0" Foreground="Gray" FontSize="10" FontWeight="Bold" Height="22" Width="78"/>
+
+
+
+        <!--MUST STAY FIRST-->
+        <Button x:Name="create" Content="Create" Command="{Binding MyReplaceUCCommand}" CommandParameter="{Binding Content, ElementName=create}" FontSize="16"  Width="158" HorizontalAlignment="Left"  Margin="92,316,0,44"  IsEnabled="True"  Height="Auto" Background="White" BorderThickness="3" />
+
+
+        <DatePicker x:Name="pickdate" materialDesign:HintAssist.Hint="Select Date" HorizontalAlignment="Left" Margin="98,63,0,0" VerticalAlignment="Top" Width="152" Height="25"/>
+
+        <materialDesign:PackIcon Kind="Food" VerticalAlignment="Center" Margin="62,257,0,112" Height="30" Width="31" Background="WhiteSmoke" />
+
+        <CheckBox x:Name="Food" Content="Food"  IsChecked="{Binding food,Mode=TwoWay}" FontSize="13" FontWeight="Bold" Margin="98,257,158,0" Checked="Food_Checked" Unchecked="Food_UnChecked" VerticalAlignment="Top" Height="39" RenderTransformOrigin="0.291,0.051"   />
+
+        <materialDesign:PackIcon Kind="MedicalBag" VerticalAlignment="Center" Margin="174,257,0,112" Height="30" Width="31" Background="WhiteSmoke" />
+        <CheckBox x:Name="Drug"  Content="Medicine" IsChecked="{Binding drug,Mode=TwoWay}"  FontSize="13" FontWeight="Bold" Margin="208,257,45,103"  Checked="Drug_Checked" Unchecked="Drug_UnChecked"  />
+
+        <materialDesign:PackIcon Kind="Hours24" VerticalAlignment="Center" Margin="62,178,0,191" Height="30" Width="31" Background="WhiteSmoke" />
+        <CheckBox x:Name="Fix"  Content="Fix" IsChecked="{Binding fix,Mode=TwoWay}" FontSize="13" FontWeight="Bold" Margin="98,178,177,187" Checked="CheckBox_Fix" Unchecked="UnCheckBox_Fix"  />
+
+        <materialDesign:PackIcon Kind="Numbers" VerticalAlignment="Center" Margin="172,182,0,187" Height="30" Width="31" Background="WhiteSmoke" />
+        <TextBox x:Name="Interval" FontSize="13"  materialDesign:HintAssist.Hint="1" materialDesign:HintAssist.HelperText="Interval in days" PreviewTextInput="TextAllow"  Margin="208,184,55,191"  FontStyle="Italic" Foreground="Gray"   >
+            <TextBox.Text >
+                <Binding Path="interval" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay" >
+
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+
+
+        <TextBlock Text="Choose address to deliver " FontSize="13" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="23,0,0,323" Height="26" Width="215" Grid.Column="1" />
+        <materialDesign:PackIcon Kind="House" VerticalAlignment="Center" Margin="207,46,0,323" Height="30" Width="31" Background="WhiteSmoke" Grid.Column="1" />
+
+        <ComboBox x:Name="addressdispo"  Margin="23,81,225,280"   SelectedIndex="0" ItemsSource="{Binding ListAddresDispoName, Mode=TwoWay}"  Height="38" Grid.Column="1" Background="White"/>
+        <Button x:Name="add" Content="Add" Command="{Binding MyReplaceUCCommand}" CommandParameter="{Binding Content, ElementName=add}"  Grid.Column="1"  Margin="272,81,81,280" Height="Auto" Background="White"/>
+
+
+        <TextBlock Text="Choosen addresses " FontSize="13"  VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="23,0,0,185" Height="26" Width="215" Grid.Column="1" />
+
+        <materialDesign:PackIcon Kind="Neighbourhood" VerticalAlignment="Center" Margin="207,184,0,185" Height="30" Width="31" Background="WhiteSmoke" Grid.Column="1" />
+
+        <ComboBox x:Name="addresschoisies" Grid.Column="1"  Margin="23,219,213,144" SelectedIndex="0" ItemsSource="{Binding ListAddressChoosenName, Mode=TwoWay}" Height="36" Background="White" />
+        <Button x:Name="remove" Content="Remove" Command="{Binding MyReplaceUCCommand}" CommandParameter="{Binding Content, ElementName=remove}"  Grid.Column="1"  Margin="272,216,81,146" Height="Auto" Background="White"  />
+
+
+        <materialDesign:PackIcon Kind="Run" VerticalAlignment="Center" Margin="62,116,0,253" Height="30" Width="31" Background="WhiteSmoke" />
+
+        <ComboBox x:Name="employee"  Margin="98,116,82,253" materialDesign:HintAssist.Hint="Delivery Man"  SelectedIndex="-1" ItemsSource="{Binding ListName, Mode=TwoWay}" Background="White" Height="30"/>
+
+
+        <Button x:Name="reset" Content="Reset" FontSize="16" Command="{Binding MyReplaceUCCommand}" CommandParameter="{Binding Content, ElementName=reset}"  Margin="116,316,240,44" Height="Auto" Background="White" Grid.Column="1"   />
+
+
+        <Button x:Name="cancel" Content="Cancel" Command="{Binding MyReplaceUCCommand}" CommandParameter="{Binding Content, ElementName=cancel}" FontSize="16" Width="93" HorizontalAlignment="Right" Grid.Column="1" Height="39" VerticalAlignment="Top" Margin="0,316,81,0" Background="White"  />
+
+
+    </Grid>
+</UserControl>

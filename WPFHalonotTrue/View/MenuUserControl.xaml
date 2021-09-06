@@ -1,0 +1,208 @@
+﻿<UserControl x:Class="WPFHalonotTrue.View.MenuUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:gif="http://wpfanimatedgif.codeplex.com"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+
+             xmlns:local="clr-namespace:WPFHalonotTrue.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ImageBrush x:Key="clientvoile" ImageSource="/Images/clientvoile.jpg" Stretch="fill"/>
+        <ImageBrush x:Key="livreur" ImageSource="/Images/livreuriconevoile.jpg" Stretch="fill"/>
+        <ImageBrush x:Key="mappointer" ImageSource="/Images/mapwithpointervoile.jpg" Stretch="fill"/>
+
+
+    </UserControl.Resources>
+
+
+    <Grid x:Name="menugrid" PreviewMouseLeftButtonDown="OnPreviewMouseLeftButtonDown" >
+        <Grid.Background>
+            <ImageBrush ImageSource="/Images/fondbleu3.jpg"></ImageBrush>
+        </Grid.Background>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid x:Name="clientgrid" >
+            <TextBlock Text="    Client"  VerticalAlignment="Top" HorizontalAlignment="Center" Margin="65,92,68,0" Foreground="LightSlateGray" FontSize="26" FontWeight="Bold" Height="48" Width="134"/>
+
+            <Button x:Name="Client"  Command="{Binding MyReplaceUCCommand}" CommandParameter="{Binding Name, ElementName=Client}" FontSize="45"  Grid.Column="0"  Foreground="Black"  Margin="25,159,34,152" Height="Auto" BorderBrush="LightSlateGray" BorderThickness="1" >
+                <Button.Background>
+                    <ImageBrush ImageSource="/Images/client.jpg" Stretch="Fill"></ImageBrush>
+                </Button.Background>
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+
+                                        <Trigger Property="IsMouseOver" Value="true">
+                                            <Setter Property="Background" TargetName="border" Value="{StaticResource clientvoile}"/>
+
+                                        </Trigger>
+
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+
+                    </Style>
+                </Button.Style>
+            </Button>
+
+        </Grid>
+
+        <Grid x:Name="employeegrid" Grid.Column="1">
+            <TextBlock Text="      Employee"  VerticalAlignment="Top" HorizontalAlignment="Center" Margin="28,92,31,0" Foreground="LightSlateGray" FontSize="26" FontWeight="Bold" Height="48" Width="208" Grid.Column="1"/>
+
+            <Button x:Name="Employee" Command="{Binding MyReplaceUCCommand}" CommandParameter="{Binding Name, ElementName=Employee}"  FontSize="45"   Foreground="Black" BorderBrush="LightSlateGray"  Margin="28,159,31,152" Grid.Column="1" >
+                <Button.Background>
+                    <ImageBrush ImageSource="/Images/livreuricone.jpg" Stretch="Fill"></ImageBrush>
+                </Button.Background>
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+
+                                        <Trigger Property="IsMouseOver" Value="true">
+                                            <Setter Property="Background" TargetName="border" Value="{StaticResource livreur}"/>
+
+                                        </Trigger>
+
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+
+                    </Style>
+                </Button.Style>
+            </Button>
+        </Grid>
+
+        <Grid x:Name="disgrid" Grid.Column="2" Margin="0,0,-1,0">
+            <TextBlock Text="      Distribution"  VerticalAlignment="Top" HorizontalAlignment="Center" Margin="10,92,31,0" Foreground="LightSlateGray" FontSize="26" FontWeight="Bold" Height="48" Width="225" Grid.Column="2"/>
+
+
+            <Button x:Name="Distribution"  Command="{Binding MyReplaceUCCommand}" CommandParameter="{Binding Name, ElementName=Distribution}" FontSize="45"  Foreground="Black"  BorderBrush="LightSlateGray" Margin="10,159,31,152" Grid.Column="2">
+                <Button.Background>
+                    <ImageBrush ImageSource="/Images/mapwithpointer.jpg" Stretch="Fill"></ImageBrush>
+                </Button.Background>
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+
+                                        <Trigger Property="IsMouseOver" Value="true">
+                                            <Setter Property="Background" TargetName="border" Value="{StaticResource mappointer}"/>
+
+                                        </Trigger>
+
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+
+                    </Style>
+                </Button.Style>
+            </Button>
+        </Grid>
+
+        <Button x:Name="NeedHelp"  Command="{Binding MyReplaceUCCommand}" CommandParameter="{Binding Name, ElementName=NeedHelp}" FontSize="45"  Foreground="Black"  Margin="9,308,129,10" Height="Auto" BorderBrush="Transparent" Visibility="Hidden" >
+            <Button.Background>
+                <VisualBrush>
+                    <VisualBrush.Visual>
+                        <Image gif:ImageBehavior.AnimatedSource="/Images/needhelpguy.gif"
+                   gif:ImageBehavior.AutoStart="True"
+                   gif:ImageBehavior.RepeatBehavior="Forever"/>
+                    </VisualBrush.Visual>
+                </VisualBrush>
+            </Button.Background>
+
+        </Button>
+
+        <Button x:Name="Help"  Command="{Binding MyReplaceUCCommand}" CommandParameter="{Binding Name, ElementName=Help}" FontSize="45"  Foreground="Black"  Margin="0,304,129,23" Height="Auto" BorderBrush="Transparent">
+            <Button.Background>
+                <VisualBrush >
+                    <VisualBrush.Visual>
+                        <Image  gif:ImageBehavior.AnimatedSource="/Images/sleepingguy.gif"
+                   gif:ImageBehavior.AutoStart="True"
+                   gif:ImageBehavior.RepeatBehavior="Forever"/>
+                    </VisualBrush.Visual>
+                </VisualBrush>
+            </Button.Background>
+
+        </Button>
+
+
+
+
+
+        <!-- <Image x:Name="myGif" gif:ImageBehavior.AnimatedSource="/Images/needhelpguy.gif" gif:ImageBehavior.RepeatBehavior="Forever"  Margin="10,317,180,31" RenderTransformOrigin="0.5,0.5" >
+            <Image.Style>
+                <Style TargetType="{x:Type Image}">
+                    <Setter Property="gif:ImageBehavior.AnimatedSource" Value="/Images/sleepingguy.gif"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="gif:ImageBehavior.AnimatedSource" Value="/Images/needhelpguy.gif" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Image.Style>
+        </Image>
+        
+        <StackPanel>
+            <StackPanel.Background>
+                <VisualBrush>
+                <VisualBrush.Visual>
+                    <Image gif:ImageBehavior.AnimatedSource="/Images/sleepingguy.gif"
+                   gif:ImageBehavior.AutoStart="True"
+                   gif:ImageBehavior.RepeatBehavior="1"/>
+                </VisualBrush.Visual>
+            </VisualBrush>
+            </StackPanel.Background>
+        </StackPanel>        
+        
+        <Image x:Name="myGif2" gif:ImageBehavior.AnimatedSource="/Images/sleepingguy.gif" gif:ImageBehavior.RepeatBehavior="Forever"  Margin="10,317,167,31" RenderTransformOrigin="0.5,0.5" >
+            <Image.Style>
+                <Style TargetType="{x:Type Image}">
+                    <Setter Property="gif:ImageBehavior.AnimatedSource" Value="/Images/sleepingguy.gif"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="gif:ImageBehavior.AnimatedSource" Value="/Images/needhelpguy.gif" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Image.Style>
+        </Image>-->
+
+
+
+
+        <Button x:Name="Music"   HorizontalAlignment="Left" Margin="92,356,0,0" VerticalAlignment="Top" Command="{Binding MyReplaceUCCommand}" CommandParameter="{Binding Name, ElementName=Music}" BorderBrush="LightSeaGreen" Width="58" Height="36" Background="Transparent" Grid.Column="2"  >
+            <Image x:Name="imagemusic" Source="/Images/musicon.png"  VerticalAlignment="Stretch" HorizontalAlignment="Center" Width="26" Height="22"></Image>
+        </Button>
+        
+        <Button x:Name="Close"   HorizontalAlignment="Left" Margin="184,356,0,0" VerticalAlignment="Top" Command="{Binding MyReplaceUCCommand}" CommandParameter="{Binding Name, ElementName=Close}" BorderBrush="LightSeaGreen" Width="58" Height="36" Background="Transparent" Grid.Column="2"  >
+            <Image  Source="/Images/closebouton.png"  VerticalAlignment="Stretch" HorizontalAlignment="Center" Width="26" Height="22"></Image>
+        </Button>
+
+
+    </Grid>
+</UserControl>

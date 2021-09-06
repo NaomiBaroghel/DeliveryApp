@@ -1,15 +1,23 @@
-﻿using System;
+﻿using ServiceStack.DataAnnotations;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace BE
 {
+    [Table("Client")]
+
     public class Client
     {
+        
         private int idClient;
-        public int IDClient
-        {
-            get { return idClient; }
-            set { idClient = value; }
-        }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int IDClient { get; set; }
         private String firstname;
         public String FirstName
         {
@@ -35,7 +43,7 @@ namespace BE
             set { phone = value; }
         }
         private Address myaddress;
-        public Address MyAddress
+        public virtual Address MyAddress
         {
             get { return myaddress; }
             set { myaddress = value; }
@@ -47,13 +55,13 @@ namespace BE
             set { food = value; }
         }
         private Boolean drug;
-        public Boolean Drug 
+        public Boolean Drug
         {
             get { return drug; }
             set { drug = value; }
         }
 
-        private Boolean assignsF; 
+        private Boolean assignsF;
         public Boolean AssignsF //est ce qu'il y a une distribution lorsque food == true
         {
             get { return assignsF; }
@@ -75,6 +83,17 @@ namespace BE
             AssignsD = false;
         }
 
-
+        public Client(string firstName, string lastName, string mail, string phone, Address myAddress, bool food, bool drug)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+            Mail = mail;
+            Phone = phone;
+            MyAddress = myAddress;
+            Food = food;
+            Drug = drug;
+            AssignsF = false;
+            AssignsD = false;
+        }
     }
 }

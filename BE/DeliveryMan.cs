@@ -1,17 +1,23 @@
-﻿using System;
+﻿using ServiceStack.DataAnnotations;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace BE
 {
+    [Table("DMan")]
+
     public class DeliveryMan
     {
+       
         private int idDMan;
-        public int IDDMan
-        {
-            get { return idDMan; }
-            set { idDMan = value; }
-        }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int IDDMan { get; set; }
         private String firstname;
         public String FirstName
         {
@@ -38,12 +44,26 @@ namespace BE
             set { phone = value; }
         }
 
-        private List<Distribution> alldistributions;
-        public List<Distribution> AllDistributions
+        private ICollection<Distribution> alldistributions;
+        public virtual ICollection<Distribution> AllDistributions
         {
             get { return alldistributions; }
             set { alldistributions = value; }
         }
 
+        public DeliveryMan()
+        {
+            AllDistributions = new List<Distribution>();
+        }
+
+        public DeliveryMan(string firstName, string lastName, string mail, string phone)
+        {
+            AllDistributions = new List<Distribution>();
+
+            FirstName = firstName;
+            LastName = lastName;
+            Mail = mail;
+            Phone = phone;
+        }
     }
-}
+    }

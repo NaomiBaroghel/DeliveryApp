@@ -12,6 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
+using WPFHalonotTrue.View;
+using WPFHalonotTrue.ViewModel;
 
 namespace WPFHalonotTrue
 {
@@ -20,9 +23,20 @@ namespace WPFHalonotTrue
     /// </summary>
     public partial class MainWindow : Window
     {
+        
+
+        public MainWindowVM myvm;
         public MainWindow()
         {
             InitializeComponent();
+            myvm = new MainWindowVM(this);
+
+            
+            
         }
+
+
+
+       
     }
 }

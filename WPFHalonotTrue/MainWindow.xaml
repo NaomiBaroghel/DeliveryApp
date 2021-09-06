@@ -3,13 +3,18 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WPFHalonotTrue"
+        xmlns:gif="http://wpfanimatedgif.codeplex.com"
+
+        xmlns:local="clr-namespace:WPFHalonotTrue" xmlns:View="clr-namespace:WPFHalonotTrue.View"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid RenderTransformOrigin="0.241,0.386">
-        <Button x:Name="button1" Content="Add" Height="50" Width="50" Margin="44,293,698,76"/>
-        <Button x:Name="button2" Content="Update" Height="50" Width="50" Margin="388,293,354,76"/>
-        <Button x:Name="button3" Content="Remove" Height="50" Width="50" Margin="674,293,68,76"/>
+        Title="OrNaoDeliveryApp" Height="450" Width="800"  WindowStartupLocation="CenterScreen"  ResizeMode="CanMinimize"  >
+    <Window.Background>
+        <ImageBrush ImageSource="/Images/fondbleu3.jpg"></ImageBrush>
+    </Window.Background>
+    <Grid x:Name="mainGrid" RenderTransformOrigin="0.241,0.386" >
+       <!-- <View:LoginUserControl HorizontalAlignment="Stretch" Margin="138,106,52,101" VerticalAlignment="Stretch" />-->
+        <Image x:Name="myGif"  gif:ImageBehavior.AnimatedSource="/Images/welcomegif.gif" gif:ImageBehavior.RepeatBehavior="Forever" Source="/Images/icongif.gif" Margin="170,70,179,80" />
 
     </Grid>
 </Window>
